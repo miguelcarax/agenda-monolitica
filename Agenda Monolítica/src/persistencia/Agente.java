@@ -37,7 +37,7 @@ public class Agente {
 	}
 	
 	public ResultSet read(String sentence) throws Exception{
-		ResultSet result = statement.executeQuery("SELECT * FROM contactos");
+		ResultSet result = statement.executeQuery(sentence);
 		return result;
 	}
 	

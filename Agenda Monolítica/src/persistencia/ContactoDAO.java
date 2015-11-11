@@ -27,10 +27,11 @@ public class ContactoDAO {
 	}
 	
 	public Contacto readContacto(long telefono) throws Exception{
-		ResultSet resultado = agenteBD.read("SELECT telefono, nombre, apellido1, apellido2 FROM Contactos WHERE telefono='"
+		ResultSet resultado = agenteBD.read("SELECT * FROM contactos WHERE telefono='"
 				+telefono+"';");
-		Contacto resulContacto = new Contacto(Integer.parseInt(resultado.getString(0)), resultado.getString(1), 
-				resultado.getString(2), resultado.getString(3));
+		resultado.next();
+		Contacto resulContacto = new Contacto(resultado.getLong(1), resultado.getString(2), resultado.getString(3), resultado.getString(4));
+		//Contacto resulContacto = new Contacto(Integer.parseInt(resultado.getString(0)), resultado.getString(1), resultado.getString(2), resultado.getString(3));
 		return resulContacto;
 	}
 	
