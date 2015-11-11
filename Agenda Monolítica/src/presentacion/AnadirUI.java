@@ -2,6 +2,7 @@ package presentacion;
 
 import dominio.Gestor;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
@@ -35,6 +37,7 @@ public class AnadirUI {
 	private JTextField txtApellido2;
 	private JFormattedTextField ftxtTelefono;
 	private Gestor gestor;
+	private final JLabel lblStatus = new JLabel("");
 
 	/**
 	 * Launch the application.
@@ -62,11 +65,18 @@ public class AnadirUI {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
+	private void limpiar(){
+		txtNombre.setText("");
+		ftxtTelefono.setText("");
+		txtApellido1.setText("");
+		txtApellido2.setText("");
+	}
 	private void initialize() {
 		gestor = new Gestor();
 		frmAgendaMonoltica = new JFrame();
 		frmAgendaMonoltica.setTitle("Agenda Monolítica");
-		frmAgendaMonoltica.setBounds(100, 100, 450, 300);
+		frmAgendaMonoltica.setBounds(100, 100, 450, 270);
 		frmAgendaMonoltica.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{22, 68, 52, 44, 50, 51, 0, 0, 0};
@@ -148,11 +158,18 @@ public class AnadirUI {
 			GridBagConstraints gbc_btnAnadir = new GridBagConstraints();
 			gbc_btnAnadir.gridwidth = 2;
 			gbc_btnAnadir.fill = GridBagConstraints.VERTICAL;
-			gbc_btnAnadir.insets = new Insets(0, 0, 5, 5);
+			gbc_btnAnadir.insets = new Insets(0, 0, 5, 0);
 			gbc_btnAnadir.gridx = 6;
 			gbc_btnAnadir.gridy = 3;
 			frmAgendaMonoltica.getContentPane().add(btnAnadir, gbc_btnAnadir);
 		}
+		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
+		gbc_lblStatus.gridwidth = 2;
+		gbc_lblStatus.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStatus.gridx = 6;
+		gbc_lblStatus.gridy = 4;
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmAgendaMonoltica.getContentPane().add(lblStatus, gbc_lblStatus);
 	}
 	private class BtnAnadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -165,8 +182,16 @@ public class AnadirUI {
 				String apellido1 = txtApellido1.getText();
 				String apellido2 = txtApellido2.getText();
 				gestor.anadir(telefono, nombre, apellido1, apellido2);
+				lblStatus.setForeground(Color.GREEN);
+				lblStatus.setText("Añadido correctamente.");
 			} catch (Exception ex){
+				JOptionPane.showMessageDialog(frmAgendaMonoltica, "Ha habido un error al añadir el contacto.", 
+						"Error",JOptionPane.PLAIN_MESSAGE);
+				lblStatus.setForeground(Color.RED);
+				lblStatus.setText("ERROR");
+				limpiar();
 				ex.printStackTrace();
+				
 			}
 			
 		}
