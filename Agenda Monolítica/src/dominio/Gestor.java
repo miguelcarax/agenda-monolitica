@@ -12,4 +12,8 @@ public class Gestor {
 	public Contacto leer(long telefono) throws Exception{
 		return GestorLeer.leer(telefono);
 	}
+	
+	public void borrar(long telefono) throws Exception{
+		GestorBorrar.borrar(telefono);
+	}
 }
