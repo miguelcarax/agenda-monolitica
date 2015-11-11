@@ -23,11 +23,11 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AnadirUI {
+public class ModificarUI {
 
 	private JFrame frmAgendaMonoltica;
 	private JPanel panel;
-	private JButton btnAnadir;
+	private JButton btnModificar;
 	private JLabel lblNumero;
 	private JLabel lblNombre;
 	private JLabel lblApellido;
@@ -37,8 +37,9 @@ public class AnadirUI {
 	private JTextField txtApellido2;
 	private JFormattedTextField ftxtTelefono;
 	private Gestor gestor;
+	private final JButton btnLimpiar = new JButton("Limpiar");
 	private final JLabel lblStatus = new JLabel("");
-	private final JButton btnVolver = new JButton("Volver");
+	private JButton btnVolver;
 
 	/**
 	 * Launch the application.
@@ -47,7 +48,7 @@ public class AnadirUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AnadirUI window = new AnadirUI();
+					ModificarUI window = new ModificarUI();
 					window.frmAgendaMonoltica.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,31 +60,25 @@ public class AnadirUI {
 	/**
 	 * Create the application.
 	 */
-	public AnadirUI() {
+	public ModificarUI() {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	
-	private void limpiar(){
-		txtNombre.setText("");
-		ftxtTelefono.setText("");
-		txtApellido1.setText("");
-		txtApellido2.setText("");
-	}
 	private void initialize() {
 		gestor = new Gestor();
 		frmAgendaMonoltica = new JFrame();
+		frmAgendaMonoltica.setResizable(false);
 		frmAgendaMonoltica.setTitle("Agenda Monolítica");
-		frmAgendaMonoltica.setBounds(100, 100, 450, 270);
+		frmAgendaMonoltica.setBounds(100, 100, 450, 300);
 		frmAgendaMonoltica.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{22, 68, 52, 44, 50, 51, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{15, 47, 0, 54, 44, 40, 0, 43, 0, 0};
+		gridBagLayout.rowHeights = new int[]{15, 47, 0, 54, 44, 40, 43, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		frmAgendaMonoltica.getContentPane().setLayout(gridBagLayout);
 		{
 			panel = new JPanel();
@@ -154,31 +149,57 @@ public class AnadirUI {
 			}
 		}
 		{
-			btnAnadir = new JButton("Añadir Contacto");
-			btnAnadir.addActionListener(new BtnAnadirActionListener());
-			GridBagConstraints gbc_btnAnadir = new GridBagConstraints();
-			gbc_btnAnadir.gridwidth = 2;
-			gbc_btnAnadir.fill = GridBagConstraints.VERTICAL;
-			gbc_btnAnadir.insets = new Insets(0, 0, 5, 0);
-			gbc_btnAnadir.gridx = 6;
-			gbc_btnAnadir.gridy = 3;
-			frmAgendaMonoltica.getContentPane().add(btnAnadir, gbc_btnAnadir);
+			btnModificar = new JButton("Modificar Contacto");
+			btnModificar.addActionListener(new BtnModificarActionListener());
+			GridBagConstraints gbc_btnModificar = new GridBagConstraints();
+			gbc_btnModificar.fill = GridBagConstraints.VERTICAL;
+			gbc_btnModificar.gridwidth = 4;
+			gbc_btnModificar.insets = new Insets(0, 0, 5, 0);
+			gbc_btnModificar.gridx = 6;
+			gbc_btnModificar.gridy = 3;
+			frmAgendaMonoltica.getContentPane().add(btnModificar, gbc_btnModificar);
 		}
-		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
-		gbc_lblStatus.gridwidth = 2;
-		gbc_lblStatus.insets = new Insets(0, 0, 5, 0);
-		gbc_lblStatus.gridx = 6;
-		gbc_lblStatus.gridy = 4;
-		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		frmAgendaMonoltica.getContentPane().add(lblStatus, gbc_lblStatus);
-		GridBagConstraints gbc_btnVolver = new GridBagConstraints();
-		gbc_btnVolver.insets = new Insets(0, 0, 5, 5);
-		gbc_btnVolver.gridx = 1;
-		gbc_btnVolver.gridy = 6;
-		btnVolver.addActionListener(new BtnVolverActionListener());
-		frmAgendaMonoltica.getContentPane().add(btnVolver, gbc_btnVolver);
+		{
+			GridBagConstraints gbc_btnLimpiar = new GridBagConstraints();
+			gbc_btnLimpiar.gridwidth = 4;
+			gbc_btnLimpiar.insets = new Insets(0, 0, 5, 0);
+			gbc_btnLimpiar.gridx = 6;
+			gbc_btnLimpiar.gridy = 4;
+			btnLimpiar.addActionListener(new BtnLimpiarActionListener());
+			frmAgendaMonoltica.getContentPane().add(btnLimpiar, gbc_btnLimpiar);
+		}
+		{
+			GridBagConstraints gbc_lblStatus = new GridBagConstraints();
+			gbc_lblStatus.gridwidth = 2;
+			gbc_lblStatus.insets = new Insets(0, 0, 5, 5);
+			gbc_lblStatus.gridx = 7;
+			gbc_lblStatus.gridy = 5;
+			frmAgendaMonoltica.getContentPane().add(lblStatus, gbc_lblStatus);
+		}
+		{
+			btnVolver = new JButton("Volver");
+			btnVolver.addActionListener(new BtnVolverActionListener());
+			GridBagConstraints gbc_btnVolver = new GridBagConstraints();
+			gbc_btnVolver.insets = new Insets(0, 0, 5, 5);
+			gbc_btnVolver.gridx = 1;
+			gbc_btnVolver.gridy = 6;
+			frmAgendaMonoltica.getContentPane().add(btnVolver, gbc_btnVolver);
+		}
 	}
-	private class BtnAnadirActionListener implements ActionListener {
+	
+	private void limpiar(){
+		txtNombre.setText("");
+		ftxtTelefono.setText("");
+		txtApellido1.setText("");
+		txtApellido2.setText("");
+	}
+	
+	private class BtnLimpiarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			limpiar();
+		}
+	}
+	private class BtnModificarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try{
 				//Recogida de datos
@@ -188,11 +209,11 @@ public class AnadirUI {
 				String nombre = txtNombre.getText();
 				String apellido1 = txtApellido1.getText();
 				String apellido2 = txtApellido2.getText();
-				gestor.anadir(telefono, nombre, apellido1, apellido2);
+				gestor.modificar(telefono, nombre, apellido1, apellido2);
 				lblStatus.setForeground(Color.GREEN);
-				lblStatus.setText("Añadido correctamente.");
+				lblStatus.setText("Modificado correctamente");
 			} catch (Exception ex){
-				JOptionPane.showMessageDialog(frmAgendaMonoltica, "Ha habido un error al añadir el contacto.", 
+				JOptionPane.showMessageDialog(frmAgendaMonoltica, "Ha habido un error al modificar el contacto.", 
 						"Error",JOptionPane.PLAIN_MESSAGE);
 				lblStatus.setForeground(Color.RED);
 				lblStatus.setText("ERROR");
@@ -200,8 +221,7 @@ public class AnadirUI {
 				ex.printStackTrace();
 				
 			}
-			
-		}
+		}	
 	}
 	private class BtnVolverActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
